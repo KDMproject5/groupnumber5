@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="solr.index.fields">ID~Service~Term~Username~Name~Update~Location~URL~Friends~Followers~Time~City~State~Country~Metro~Latitude~Longitude</entry>
+	<entry key="solr.core.dir">solr-4.2.1-home</entry>
+	<entry key="field.delimiter">~</entry>
+</properties>
