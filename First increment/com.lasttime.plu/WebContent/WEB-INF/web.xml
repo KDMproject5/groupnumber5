@@ -10,7 +10,7 @@
     <welcome-file>welcomepage.html</welcome-file>
     <welcome-file>hello.html</welcome-file>
     <welcome-file>login.jsp</welcome-file>
-    
+    <welcome-file>leg.html</welcome-file>
     
   </welcome-file-list>
   

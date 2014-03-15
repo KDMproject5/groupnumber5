@@ -13,52 +13,106 @@
      white-space:normal !important
 }   
  </style>
+ <script type ="text/javascript">
+ (function($) {
+		$.fn.serializeObject = function()
+		{
+			var o = {};
+			var a = this.serializeArray();
+			$.each(a, function() {
+				if (o[this.name] !== undefined) {
+					if (!o[this.name].push) {
+						o[this.name] = [o[this.name]];
+					}
+					o[this.name].push(this.value || '');
+				} else {
+					o[this.name] = this.value || '';
+				}
+			});
+			return o;
+		};
+	})(jQuery);
+ </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var $post = $('#post_example');
+	$('#submit').click(function(e) {
+		e.preventDefault();
+		
+		var javascriptobj = $post.serializeObject(), ajaxObj = {};
+		ajaxObj = {
+				type: "POST",
+				url: "http://localhost:7001/com.lasttime.plu/api/V2/inventory/",
+				data: JSON.stringify(javascriptobj),
+				contentType:"application/json",
+				error: function(jqXHR, textStatus, errorThrown) {
+				console.log("Error " + jqXHR.getAllResponseHeaders() + " " + errorThrown);
+				},
+				success: function(data) {
+					//console.log(data);
+					if(data[0].HTTP_CODE == 200) {
+					$('#div_ajaxResponse').text( data[0].MSG );
+					}
+					},
+					complete: function(XMLHttpRequest) {
+						//console.log( XMLHttpRequest.getAllResponseHeaders() );
+						},
+						dataType: "json" //request JSON
+						};
 
+						$.ajax(ajaxObj);
+						});
+
+});
+	
+</script>
 </head>
 <body>
+<div id="div_ajaxResponse"></div>
+<form id="post_example" name="post_example" action="registration.jsp" method ="post">
 <div data-role ="page" id ="home"  data-inline="true" >
         <header data-role ="header" data-theme="b">
         <h1>User Registration</h1>
              <a href="#home">home</a>
     </header>
+
     <div data-role="fieldcontain" data-inline="true" >
     <label for="name">Name</label>
-    <input type="text" name="name" id="name" value=""  />
-</div>	
-    <div data-role="fieldcontain" data-inline="true" >
-    <label for="name">User Name</label>
-    <input type="text" name="name" id="name" value=""  />
-</div>	
-    <div data-role="fieldcontain" data-inline="true" >
-    <label for="name">Email id </label>
-    <input type="text" name="name" id="name" value=""  />
-</div>
-<div data-role="fieldcontain" data-inline="true" >
-    <label for="password">Password </label>
-    <input type="password" name="password" id="password" value="" />
-</div>	
-<div data-role="fieldcontain" data-inline="true" >
-    <label for="password">Confirm Password </label>
-    <input type="password" name="password" id="password" value="" />
-</div>	
-	<div data-role="fieldcontain" data-inline="true" >
-   <label for="select-choice-1" class="select" data-inline ="true">Security Question</label>
-   <select name="select-choice-1" id="select-choice-1" >
-   <option value="birth">What is your place of birth</option>
-   <option value="holiday">What is your favourite holiday spot ?</option>
-   <option value="idol">Who is your idol</option>
-   <option value="Friend">Who is your child hood's best friend ?</option>
-   <option value="Hero">Who is your child hood's hero?</option>
-</select>
-</div>
-<div data-role="fieldcontain" data-inline="true" >
-    <label for="name">Security Answer</label>
-    <input type="text" name="name" id="name" value=""  />
-</div>
-<div align ="center">
-<input type="submit" value="Submit" data-inline="true" data-icon="check"/>
-<a href="index.html" data-role="button" data-inline="true" data-theme ="b" data-icon="delete">Cancel</a>
+    <input type="text" name ="fname" id="username" value=""  />
 </div>
 
+    <div data-role="fieldcontain" data-inline="true" >
+    <label for="name">User Name</label>
+    <input type="text" name ="username" id="name" value=""  />
+</div>	
+
+    <div data-role="fieldcontain" data-inline="true" >
+    <label for="name">Email id </label>
+    <input type="text" name ="email_id" id="email_id" value=""  />
+</div>
+
+<div data-role="fieldcontain" data-inline="true" >
+    <label for="password">Password </label>
+    <input type="password"  name ="userpassword" id="password" value="" />
+</div>	
+
+<div data-role="fieldcontain" data-inline="true" >
+    <label for="password">Confirm Password </label>
+    <input type="password" name ="confirm_password" id="confpassword" value="" />
+</div>	
+
+	
+<div data-role="fieldcontain" data-inline="true" >
+    <label for="name">Security Answer</label>
+    <input type="text" name ="security_answer" id="secans" value=""  />
+</div>
+
+<div align ="center">
+<input type="submit" value="Submit" data-inline="true" data-icon="check" id ="submit" />
+<a href="index.html" data-role="button" data-inline="true" data-theme ="b" data-icon="delete">Cancel</a>
+</div>
+</div>
+</form>
 </body>
+
 </html>
