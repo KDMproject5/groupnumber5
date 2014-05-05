@@ -1,0 +1,943 @@
+<div data-role="page" id="page1">
+    <div data-role="header">
+        <h4> Healthcare Service Information </h4>
+        
+
+    </div>
+<br>    
+
+    <h2 align="center" > <font color="blue" > Enter Disease Name </font> </h2> <input type="text" align="center" id="from" /><br>
+    <p align="center"> <a href="#info" > <button id="info" data-mini="true" data-inline="true"> <font color="blue" > Disease Information </font> </button></a> 
+        <a href="#best" > <button id="best"  data-mini="true" data-inline="true"> <font color="blue" > Best Nearby Hospital </font></button></a>
+        
+        
+<input type="radio" name="radio-choice" id="radio-choice-1" value="choice-1"  data-mini="true" data-inline="true" />
+     	<label for="radio-choice-1">Non-Emergency</label>
+
+     	<input type="radio" name="radio-choice" id="radio-choice-2" value="choice-2"  data-mini="true" data-inline="true"/>
+     	<label for="radio-choice-2">Emergency</label>
+     </div>
+</div>
+<div data-role="page" id="info">
+    <div data-role="header">
+        <h1> Better Information, </h1>
+                <h2>     Better Health </h2>
+
+        <a data-rel="back" data-icon="home">Home</a>
+</div>
+    
+    
+    
+    <h2>  <div id="write"></div>
+    </h2>
+    <h5><div id="write1"></div></h5>
+    <h5><div id="write2"></div></h5>
+    <h5><div id ="write3"></div></h5>
+    
+     
+    
+     
+</div>
+<div data-role="page" id="best">
+    <div data-role="header">
+         <h1> Positive Dynamics </h1>
+
+        <a data-rel="back" data-icon="home">Home</a>
+</div>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script> 
+    <div id="map1"></div>
+    
+    
+    <h2>  <div id="write4"></div>
+    </h2>
+    <h4><div id="write5"></div></h4>
+    <p><div id="write6"></div></p>
+    
+     
+<div id="map_canvas1" style="height: 400px; width: 400px"></div>   
+    
+    
+    
+    <p><div id ="write7"></div></p>
+    <div id="map_canvas2" style="height: 400px; width: 400px"></div>
+    
+     <p><div id ="write8"></div></p>
+    <div id="map_canvas3" style="height: 400px; width: 400px"></div>
+    <p><div id ="write9"></div></p><p></p>
+    <div id="map2"></div>
+</div>
+
+<div data-role="page" id="button">
+    <div data-role="header">
+         <h1> Information </h1>
+
+        <a data-rel="back" data-icon="home">Home</a>
+</div>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script> 
+    
+    <h2>  <div id="write4"></div>
+    </h2>
+    <h4><div id="write5"></div></h4>
+    <p><div id="write6"></div></p>
+    <p><div id ="write7"></div></p>
+     <p><div id ="write8"></div></p>
+    <p><div id ="write9"></div></p><p></p>
+    
+    
+</div>
+</div>
+<script>
+/*var mapProp={
+    zoom:5,
+    mapTypeId:'roadmap'
+};
+
+
+    
+//var map1=new google.maps.Map($('#map1')[0], mapProp);
+var map1=new google.maps.Map(
+  document.getElementById("map1"),mapProp);
+var markers = [];
+if(navigator.geolocation) 
+{
+   navigator.geolocation.getCurrentPosition
+   (function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+       
+
+      var infowindow = new google.maps.InfoWindow({
+        map: map1,
+        position: pos,
+        //content: 'Location found using HTML5.'
+                                                });
+        map1.setCenter(pos);
+        
+
+        var marker=new google.maps.Marker({
+                    map: map1,
+                    
+        
+                    position: pos
+                                          });
+       
+       marker.setMap(map1);
+       
+       var geocoder = new google.maps.Geocoder();
+       var pos1 = "Chicago";
+       
+       geocoder.geocode
+       ({
+				address : pos1, 
+				region: 'no' 
+			            },
+                        
+
+         function(results, status) 
+         {
+		    	
+					// Get center
+					var coords = new google.maps.LatLng(
+						results[0]['geometry']['location'].lat(),
+						results[0]['geometry']['location'].lng()
+					                                    );
+
+                    alert(coords);
+    
+                var marker1=new google.maps.Marker({
+                              map: map1,
+                                position: coords
+                                                  });
+
+       
+
+                 marker1.setMap(map1);
+
+            }
+            );
+
+   }, function() {
+      handleNoGeolocation(true);
+    });
+  
+  }*/
+       
+          
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var info = document.getElementById('info');
+$('#info').click(function(){
+var info1 = $( "#from" ).val();
+   
+
+    $.getJSON('http://134.193.136.127:8983/solr/collection1_shard1_replica1/select/?wt=json&json.wrf=?&q=id%3A'+'%22'+info1+'%22', function(result){
+    
+// alert( result.response.docs[0].DiseaseID_s + "  ,  " + result.response.docs[0].Synonyms_s + "  ,  " + result.response.docs[0].SlimMappings_s
+  //     );
+    
+    
+    document.getElementById('write').innerHTML = "Disease Information:  "
+    document.getElementById('write1').innerHTML = "DISEASE ID: "+ result.response.docs[0].DiseaseID_s + "  ,  " 
+    document.getElementById('write2').innerHTML = " CAUSE OF DISEASE: "+ result.response.docs[0].Synonyms_s + "  ,  " 
+    document.getElementById('write3').innerHTML =" TYPE OF DISEASE: "+ result.response.docs[0].SlimMappings_s    
+});
+
+});
+
+
+var best = document.getElementById('best');
+$('#best').click(function(){
+    
+     var eme = $('input[name=radio-choice]:checked').val();
+   // alert(eme);
+   
+if (eme == "choice-1")
+    {
+    
+    
+    var best1 = "KANSAS CITY";
+    
+    $.getJSON('http://134.193.136.127:8983/solr/collection1_shard1_replica1/select/?wt=json&json.wrf=?&q=City_s%3A'+'%22'+best1+'%22', function(result){
+        
+        $( "#write4" ).append( "<br>"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"<u>"+"Best Hospitals Available in your Location:"+"</u>"+"<br>"+"<br>");
+        
+        for ( var k=1;k<=3;k++ )
+        {
+        //$.each(result.response.docs[k], function(i,item){ 
+//document.getElementById('write4').innerHTML = " Best Hospital Available:  "
+//messages: {
+    //name: "Please specify your name."},
+        //$("h2").html('HIII'+k);
+            //$( "h2" ).append( "<a>"+k+"</a>" );
+            
+             $( "#write6" ).append( 
+            
+  "<h4>"+ " Hospital Name: "+"</h4>"+"<h4>"+ result.response.docs[k].Hospital_Name_s +"</h4>"
+    +"<h4>"+ "Address :"+"</h4> "+"<p>"+ result.response.docs[k].Address_1_s +  result.response.docs[k].Address_2_s    + 
+        result.response.docs[k].Address_3_s
+                              
++"<br>"+"State ID: "+result.response.docs[k].State_s  
+    +"<br>"+" ZIP Code : "+  result.response.docs[k].ZIP_Code_s
+     +"<br>"+" Phone No : "+  result.response.docs[k].Phone_Number_s+"<br>"+"<br>"  ); 
+                 
+        
+        
+            
+            var mapProp={
+    zoom:10,
+    mapTypeId:'roadmap'
+};
+
+
+    
+//var map1=new google.maps.Map($('#map1')[0], mapProp);
+var map1=new google.maps.Map(
+  document.getElementById("map1"),mapProp);
+            
+var markers = [];
+        
+if(navigator.geolocation) 
+{
+    
+   navigator.geolocation.getCurrentPosition
+   (function(position) {
+       var info1 = "KANSAS CITY";
+   
+
+    $.getJSON('http://134.193.136.127:8983/solr/collection1_shard1_replica1/select/?wt=json&json.wrf=?&q=City_s%3A'+'%22'+info1+'%22', function(result){
+        
+        var add1 = result.response.docs[1].Address_1_s;
+        var add2 = result.response.docs[2].Address_1_s;
+        var add3 = result.response.docs[3].Address_1_s;
+    //alert (add);
+      
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+       
+       
+
+      var infowindow = new google.maps.InfoWindow({
+        map: map1,
+        position: pos,
+        //content: 'Location found using HTML5.'
+                                                });
+        map1.setCenter(pos);
+      // var icon = "http://maps.google.com/mapfiles/ms/icons/blue.png";
+        var icon1 = "http://findicons.com/files/icons/951/google_maps/32/hospital.png";
+        var marker=new google.maps.Marker({
+                    map: map1,
+                    
+        
+                    position: pos
+                    
+                                          });
+       
+       marker.setMap(map1);
+  
+       var geocoder = new google.maps.Geocoder();
+       //var pos1 = "Chicago";
+       
+       geocoder.geocode
+       ({
+				address : add2, 
+				region: 'no' 
+			            },
+                        
+
+         function(results, status) 
+         {
+		    	
+					// Get center
+					var coords = new google.maps.LatLng(
+						results[0]['geometry']['location'].lat(),
+						results[0]['geometry']['location'].lng()
+					                                    );
+
+                   // alert(coords);
+         
+                var marker1=new google.maps.Marker({
+                              map: map1,
+                                position: coords,
+                    icon: new google.maps.MarkerImage(icon1)
+                                                  });
+                 
+ marker1.setMap(map1);
+               
+//alert(coords);
+                 
+}); 
+          
+       
+        
+        
+        
+       // alert("HIII");
+        
+        var geocoder = new google.maps.Geocoder();
+       //var pos1 = "Chicago";
+       
+       geocoder.geocode
+       ({
+				address : add3, 
+				region: 'no' 
+			            },
+                        
+
+         function(results, status) 
+         {
+		    	
+					// Get center
+					var coords1 = new google.maps.LatLng(
+						results[0]['geometry']['location'].lat(),
+						results[0]['geometry']['location'].lng()
+					                                    );
+
+                   // alert(coords);
+            
+                var marker2=new google.maps.Marker({
+                              map: map1,
+                                position: coords1,
+                    icon: new google.maps.MarkerImage(icon1)
+                                                  });
+             //alert(coords1);
+ 
+       
+                marker2.setMap(map1);
+                
+            
+});            
+        
+
+        
+        
+         var geocoder = new google.maps.Geocoder();
+       //var pos1 = "Chicago";
+       
+       geocoder.geocode
+       ({
+				address : add1, 
+				region: 'no' 
+			            },
+                        
+
+         function(results, status) 
+         {
+		    	
+					// Get center
+					var coords = new google.maps.LatLng(
+						results[0]['geometry']['location'].lat(),
+						results[0]['geometry']['location'].lng()
+					                                    );
+
+                   // alert(coords);
+         
+                var marker3=new google.maps.Marker({
+                              map: map1,
+                                position: coords,
+                    icon: new google.maps.MarkerImage(icon1)
+                                                  });
+                 
+ marker3.setMap(map1);
+               
+//alert(coords);
+                 
+}); 
+          
+       
+        
+        
+       
+   }, function() {
+      handleNoGeolocation(true);
+       
+
+
+
+    });
+  });
+}
+          
+  
+
+            
+       
+           
+/*var button = document.getElementById('button');
+//var str = $( "#from" ).text();
+//var b= $("#to").text();
+
+var directionDisplay;
+var directionsService = new google.maps.DirectionsService();     //Create a DirectionsService object which is required to communicate with the Google Maps API Direction Service
+var map2;
+$('#button').click(function(){*/
+//    alert("HIII");
+    var directionDisplay1;
+            var directionDisplay2;
+            var directionDisplay3;
+        var map2,map3,map4;
+var directionsService1 = new google.maps.DirectionsService();
+            var directionsService2 = new google.maps.DirectionsService();
+            var directionsService3 = new google.maps.DirectionsService();
+      var kan1 = result.response.docs[1].Address_1_s;
+        var kan2 = result.response.docs[2].Address_1_s;
+        var kan3 = result.response.docs[3].Address_1_s; /*$.getJSON('http://134.193.136.127:8983/solr/collection1_shard1_replica1/select/?wt=json&json.wrf=?&q=City_s%3A'+'%22'+best1+'%22', function(result){*/
+    
+    directionsDisplay1 = new google.maps.DirectionsRenderer();
+            directionsDisplay2 = new google.maps.DirectionsRenderer();
+            directionsDisplay3 = new google.maps.DirectionsRenderer();
+            //Create a DirectionsRenderer object to render the directions results
+    var center = new google.maps.LatLng(0, 0);    //Map is centered at 0,0
+    var myOptions =
+    {
+            zoom:9,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: center
+    }
+    map2 = new google.maps.Map(document.getElementById("map_canvas1"), myOptions);
+            map3 = new google.maps.Map(document.getElementById("map_canvas2"), myOptions);
+
+map4 = new google.maps.Map(document.getElementById("map_canvas3"), myOptions);         
+            
+    directionsDisplay1.setMap(map2);
+            directionsDisplay2.setMap(map3);
+            directionsDisplay3.setMap(map4);
+    //var start = $( "#from" ).val();     //Set the source/ origin
+    //var end = result.response.docs[k].Address_1_s+","+result.response.docs[k].City_s+","+result.response.docs[k].State_s+","result.response.docs[k].ZIP_Code_s;  //Set the destination
+    var pos;
+    if(navigator.geolocation) {
+   navigator.geolocation.getCurrentPosition(function(position) {
+       pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+      // alert (end);
+
+      
+   
+        
+    var request1 =
+    {
+            //alert (pos);
+            //var loca = "39.0506743";
+            //alert ( loca );
+            origin:pos,
+        destination:kan1,
+            travelMode: google.maps.DirectionsTravelMode.WALKING          //Current travel mode is DRIVING. You can change to BICYCLING or WALKING and see the changes.
+    };
+    directionsService1.route(request1, function(response, status)
+    {
+            if (status == google.maps.DirectionsStatus.OK) //Check if request is successful.
+            {
+            directionsDisplay1.setDirections(response);         //Display the directions result
+                document.getElementById('write7').innerHTML ="<h3>Distance: </h3>"+ "<h4>"+response.routes[0].legs[0].distance.value / 1000+" KM</h4>";;
+            }
+    });
+       
+     
+       
+       var request2 =
+    {
+            //alert (pos);
+            //var loca = "39.0506743";
+            //alert ( loca );
+            origin:pos,
+        destination:kan2,
+            travelMode: google.maps.DirectionsTravelMode.WALKING          //Current travel mode is DRIVING. You can change to BICYCLING or WALKING and see the changes.
+    };
+       //alert("HIII");
+    directionsService2.route(request2, function(response, status)
+    {
+            if (status == google.maps.DirectionsStatus.OK) //Check if request is successful.
+            {
+               // alert("HIII");
+            directionsDisplay2.setDirections(response);         //Display the directions result
+                  document.getElementById('write8').innerHTML = "<h3>Distance: </h3>"+ "<h4>"+response.routes[0].legs[0].distance.value / 1000+" KM</h4>";
+                
+            }
+    });
+       
+       
+       
+       var request3 =
+    {
+            //alert (pos);
+            //var loca = "39.0506743";
+            //alert ( loca );
+            origin:pos,
+        destination:kan3,
+            travelMode: google.maps.DirectionsTravelMode.WALKING          //Current travel mode is DRIVING. You can change to BICYCLING or WALKING and see the changes.
+    };
+    directionsService3.route(request3, function(response, status)
+    {
+            if (status == google.maps.DirectionsStatus.OK) //Check if request is successful.
+            {
+            directionsDisplay3.setDirections(response);         //Display the directions result
+                  document.getElementById('write9').innerHTML =  "<h3>Distance: </h3>"+ "<h4>"+response.routes[0].legs[0].distance.value / 1000+" KM</h4>";
+            }
+    });
+       
+       
+       
+       var infowindow = new google.maps.InfoWindow({
+        map: map1,
+        position: pos,
+          
+        //content: 'Location found using HTML5.'
+          });
+});
+    }
+        }
+    
+ });
+            
+            
+    
+
+// alert( result.response.docs[0].DiseaseID_s + "  ,  " + result.response.docs[0].Synonyms_s + "  ,  " + result.response.docs[0].SlimMappings_s
+  //     );
+    
+    
+  /*  document.getElementById('write4').innerHTML = " Best Hospital Available:  "
+    document.getElementById('write7').innerHTML = "State ID: "+ result.response.docs[1].State_s + "  ,  " 
+    document.getElementById('write5').innerHTML = " Hospital Name: "+ result.response.docs[1].Hospital_Name_s + "  ,  " 
+    document.getElementById('write6').innerHTML =" Address : "+ result.response.docs[1].Address_1_s    + "," + result.response.docs[1].Address_2_s    + "," +
+        result.response.docs[1].Address_3_s
+   document.getElementById('write8').innerHTML =" ZIP Code : "+  result.response.docs[1].ZIP_Code_s
+     document.getElementById('write9').innerHTML =" Phone No : "+  result.response.docs[1].Phone_Number_s   */
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    if (eme == "choice-2")
+    {
+        
+        var best1 = "KANSAS CITY";
+    
+    $.getJSON('http://134.193.136.127:8983/solr/collection1_shard1_replica1/select/?wt=json&json.wrf=?&q=City_s%3A'+'%22'+best1+'%22', function(result){
+        
+        $( "#write4" ).append( "<br>"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"<u>"+"Best Hospitals Available in your Location:"+"</u>"+"<br>"+"<br>");
+        
+        for ( var k=1;k<=3;k++ )
+        {
+        //$.each(result.response.docs[k], function(i,item){ 
+//document.getElementById('write4').innerHTML = " Best Hospital Available:  "
+//messages: {
+    //name: "Please specify your name."},
+        //$("h2").html('HIII'+k);
+            //$( "h2" ).append( "<a>"+k+"</a>" );
+            
+             $( "#write6" ).append( 
+            
+  "<h4>"+ " Hospital Name: "+"</h4>"+"<h4>"+ result.response.docs[k].Hospital_Name_s +"</h4>"
+    +"<h4>"+ "Address :"+"</h4> "+"<p>"+ result.response.docs[k].Address_1_s +  result.response.docs[k].Address_2_s    + 
+        result.response.docs[k].Address_3_s
+                              
++"<br>"+"State ID: "+result.response.docs[k].State_s  
+    +"<br>"+" ZIP Code : "+  result.response.docs[k].ZIP_Code_s
+     +"<br>"+" Phone No : "+  result.response.docs[k].Phone_Number_s+"<br>"+"<br>"  ); 
+                 
+        
+        
+            
+            
+            
+       
+           
+/*var button = document.getElementById('button');
+//var str = $( "#from" ).text();
+//var b= $("#to").text();
+
+var directionDisplay;
+var directionsService = new google.maps.DirectionsService();     //Create a DirectionsService object which is required to communicate with the Google Maps API Direction Service
+var map2;
+$('#button').click(function(){*/
+//    alert("HIII");
+    var directionDisplay1;
+            var directionDisplay2;
+            var directionDisplay3;
+        var map2,map3,map4;
+var directionsService1 = new google.maps.DirectionsService();
+            var directionsService2 = new google.maps.DirectionsService();
+            var directionsService3 = new google.maps.DirectionsService();
+      var kan1 = result.response.docs[1].Address_1_s;
+        var kan2 = result.response.docs[2].Address_1_s;
+        var kan3 = result.response.docs[3].Address_1_s; /*$.getJSON('http://134.193.136.127:8983/solr/collection1_shard1_replica1/select/?wt=json&json.wrf=?&q=City_s%3A'+'%22'+best1+'%22', function(result){*/
+    
+    directionsDisplay1 = new google.maps.DirectionsRenderer();
+            directionsDisplay2 = new google.maps.DirectionsRenderer();
+            directionsDisplay3 = new google.maps.DirectionsRenderer();
+            //Create a DirectionsRenderer object to render the directions results
+    var center = new google.maps.LatLng(0, 0);    //Map is centered at 0,0
+    var myOptions =
+    {
+            zoom:9,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: center
+    }
+    map2 = new google.maps.Map(document.getElementById("map_canvas1"), myOptions);
+            map3 = new google.maps.Map(document.getElementById("map_canvas2"), myOptions);
+
+map4 = new google.maps.Map(document.getElementById("map_canvas3"), myOptions);         
+            
+    directionsDisplay1.setMap(map2);
+            directionsDisplay2.setMap(map3);
+            directionsDisplay3.setMap(map4);
+    //var start = $( "#from" ).val();     //Set the source/ origin
+    //var end = result.response.docs[k].Address_1_s+","+result.response.docs[k].City_s+","+result.response.docs[k].State_s+","result.response.docs[k].ZIP_Code_s;  //Set the destination
+    var pos;
+    if(navigator.geolocation) {
+   navigator.geolocation.getCurrentPosition(function(position) {
+       pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+      // alert (end);
+
+      
+   
+        
+    var request1 =
+    {
+            //alert (pos);
+            //var loca = "39.0506743";
+            //alert ( loca );
+            origin:pos,
+        destination:kan1,
+            travelMode: google.maps.DirectionsTravelMode.WALKING          //Current travel mode is DRIVING. You can change to BICYCLING or WALKING and see the changes.
+    };
+    directionsService1.route(request1, function(response, status)
+    {
+            if (status == google.maps.DirectionsStatus.OK) //Check if request is successful.
+            {
+            directionsDisplay1.setDirections(response);         //Display the directions result
+                document.getElementById('write7').innerHTML ="<h3>Distance: </h3>"+ "<h4>"+response.routes[0].legs[0].distance.value / 1000+" KM</h4>";;
+            }
+    });
+       
+     
+       
+       var request2 =
+    {
+            //alert (pos);
+            //var loca = "39.0506743";
+            //alert ( loca );
+            origin:pos,
+        destination:kan2,
+            travelMode: google.maps.DirectionsTravelMode.WALKING          //Current travel mode is DRIVING. You can change to BICYCLING or WALKING and see the changes.
+    };
+       //alert("HIII");
+    directionsService2.route(request2, function(response, status)
+    {
+            if (status == google.maps.DirectionsStatus.OK) //Check if request is successful.
+            {
+               // alert("HIII");
+            directionsDisplay2.setDirections(response);         //Display the directions result
+                  document.getElementById('write8').innerHTML = "<h3>Distance: </h3>"+ "<h4>"+response.routes[0].legs[0].distance.value / 1000+" KM</h4>";
+                
+            }
+    });
+       
+       
+       
+       var request3 =
+    {
+            //alert (pos);
+            //var loca = "39.0506743";
+            //alert ( loca );
+            origin:pos,
+        destination:kan3,
+            travelMode: google.maps.DirectionsTravelMode.WALKING          //Current travel mode is DRIVING. You can change to BICYCLING or WALKING and see the changes.
+    };
+    directionsService3.route(request3, function(response, status)
+    {
+            if (status == google.maps.DirectionsStatus.OK) //Check if request is successful.
+            {
+            directionsDisplay3.setDirections(response);         //Display the directions result
+                  document.getElementById('write9').innerHTML =  "<h3>Distance: </h3>"+ "<h4>"+response.routes[0].legs[0].distance.value / 1000+" KM</h4>";
+            }
+    });
+       
+       
+       
+       var infowindow = new google.maps.InfoWindow({
+        map: map1,
+        position: pos,
+          
+        //content: 'Location found using HTML5.'
+          });
+});
+    }
+        }
+    
+ });
+            
+            
+    
+        
+        var mapProp={
+    zoom:10,
+    mapTypeId:'roadmap'
+};
+
+
+    
+//var map1=new google.maps.Map($('#map1')[0], mapProp);
+var map1=new google.maps.Map(
+  document.getElementById("map1"),mapProp);
+            
+var markers = [];
+        
+if(navigator.geolocation) 
+{
+    
+   navigator.geolocation.getCurrentPosition
+   (function(position) {
+       var info1 = "KANSAS CITY";
+   
+
+    $.getJSON('http://134.193.136.127:8983/solr/collection1_shard1_replica1/select/?wt=json&json.wrf=?&q=City_s%3A'+'%22'+info1+'%22', function(result){
+        
+        var add1 = result.response.docs[1].Address_1_s;
+        var add2 = result.response.docs[2].Address_1_s;
+        var add3 = result.response.docs[3].Address_1_s;
+    //alert (add);
+      
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+       
+       
+
+      var infowindow = new google.maps.InfoWindow({
+        map: map1,
+        position: pos,
+        //content: 'Location found using HTML5.'
+                                                });
+        map1.setCenter(pos);
+      // var icon = "http://maps.google.com/mapfiles/ms/icons/blue.png";
+        var icon1 = "http://findicons.com/files/icons/951/google_maps/32/hospital.png";
+        var marker=new google.maps.Marker({
+                    map: map1,
+                    
+        
+                    position: pos
+                    
+                                          });
+       
+       marker.setMap(map1);
+  
+       var geocoder = new google.maps.Geocoder();
+       //var pos1 = "Chicago";
+       
+       geocoder.geocode
+       ({
+				address : add2, 
+				region: 'no' 
+			            },
+                        
+
+         function(results, status) 
+         {
+		    	
+					// Get center
+					var coords = new google.maps.LatLng(
+						results[0]['geometry']['location'].lat(),
+						results[0]['geometry']['location'].lng()
+					                                    );
+
+                   // alert(coords);
+         
+                var marker1=new google.maps.Marker({
+                              map: map1,
+                                position: coords,
+                    icon: new google.maps.MarkerImage(icon1)
+                                                  });
+                 
+ marker1.setMap(map1);
+               
+//alert(coords);
+                 
+}); 
+          
+       
+        
+        
+        
+       // alert("HIII");
+        
+        var geocoder = new google.maps.Geocoder();
+       //var pos1 = "Chicago";
+       
+       geocoder.geocode
+       ({
+				address : add3, 
+				region: 'no' 
+			            },
+                        
+
+         function(results, status) 
+         {
+		    	
+					// Get center
+					var coords1 = new google.maps.LatLng(
+						results[0]['geometry']['location'].lat(),
+						results[0]['geometry']['location'].lng()
+					                                    );
+
+                   // alert(coords);
+            
+                var marker2=new google.maps.Marker({
+                              map: map1,
+                                position: coords1,
+                    icon: new google.maps.MarkerImage(icon1)
+                                                  });
+             //alert(coords1);
+ 
+       
+                marker2.setMap(map1);
+                
+            
+});            
+        
+
+        
+        
+         var geocoder = new google.maps.Geocoder();
+       //var pos1 = "Chicago";
+       
+       geocoder.geocode
+       ({
+				address : add1, 
+				region: 'no' 
+			            },
+                        
+
+         function(results, status) 
+         {
+		    	
+					// Get center
+					var coords = new google.maps.LatLng(
+						results[0]['geometry']['location'].lat(),
+						results[0]['geometry']['location'].lng()
+					                                    );
+
+                   // alert(coords);
+         
+                var marker3=new google.maps.Marker({
+                              map: map1,
+                                position: coords,
+                    icon: new google.maps.MarkerImage(icon1)
+                                                  });
+                 
+ marker3.setMap(map1);
+               
+//alert(coords);
+                 
+}); 
+          
+       
+        
+        
+       
+   }, function() {
+      handleNoGeolocation(true);
+       
+
+
+
+    });
+  });
+}
+          
+  
+
+
+// alert( result.response.docs[0].DiseaseID_s + "  ,  " + result.response.docs[0].Synonyms_s + "  ,  " + result.response.docs[0].SlimMappings_s
+  //     );
+    
+    
+  /*  document.getElementById('write4').innerHTML = " Best Hospital Available:  "
+    document.getElementById('write7').innerHTML = "State ID: "+ result.response.docs[1].State_s + "  ,  " 
+    document.getElementById('write5').innerHTML = " Hospital Name: "+ result.response.docs[1].Hospital_Name_s + "  ,  " 
+    document.getElementById('write6').innerHTML =" Address : "+ result.response.docs[1].Address_1_s    + "," + result.response.docs[1].Address_2_s    + "," +
+        result.response.docs[1].Address_3_s
+   document.getElementById('write8').innerHTML =" ZIP Code : "+  result.response.docs[1].ZIP_Code_s
+     document.getElementById('write9').innerHTML =" Phone No : "+  result.response.docs[1].Phone_Number_s   */
+    }
+    
+    
+    
+ });
+
+
+
+
+info.addEventListener('click', onClick, false);
+best.addEventListener('click', onClick, false);
+button.addEventListener('click', onClick, false);
+</script>
